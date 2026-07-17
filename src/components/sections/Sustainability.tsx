@@ -1,7 +1,6 @@
 'use client';
 
 import SectionHeading from '../ui/SectionHeading';
-import GlassCard from '../ui/GlassCard';
 import { SectionProps } from '@/types';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -14,25 +13,25 @@ const metrics = [
     title: 'Zero Effluent Discharge',
     desc: 'Advanced water treatment ensures every drop is recycled, setting industry benchmarks for environmental responsibility.',
     icon: (
-      <svg className="w-6 h-6 text-gold-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+      <svg className="w-8 h-8 text-gold-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
       </svg>
     ),
   },
   {
     title: 'Energy Efficient',
-    desc: 'Modern energy management systems reduce our carbon footprint while maintaining peak production output.',
+    desc: 'Modern energy management systems reduce our carbon footprint while maintaining peak production output seamlessly.',
     icon: (
-      <svg className="w-6 h-6 text-gold-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+      <svg className="w-8 h-8 text-gold-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
       </svg>
     ),
   },
   {
     title: 'Fully Automated',
-    desc: 'Precision automation minimizes waste and ensures consistent quality in every batch.',
+    desc: 'Precision automation minimizes waste and ensures consistent quality in every single batch produced.',
     icon: (
-      <svg className="w-6 h-6 text-gold-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+      <svg className="w-8 h-8 text-gold-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
         <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
       </svg>
@@ -45,26 +44,32 @@ export default function Sustainability({ id, className = '' }: SectionProps) {
 
   useEffect(() => {
     if (!containerRef.current) return;
+    const textEls = containerRef.current.querySelectorAll('.animate-text');
     const cards = containerRef.current.querySelectorAll('.sustain-card');
     const statement = containerRef.current.querySelector('.statement');
 
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: containerRef.current,
-        start: 'top 80%',
+        start: 'top 75%',
       },
     });
 
     tl.fromTo(
+      textEls,
+      { opacity: 0, y: 40 },
+      { opacity: 1, y: 0, duration: 1, stagger: 0.2, ease: 'power3.out' }
+    )
+    .fromTo(
       cards,
-      { opacity: 0, y: 30 },
-      { opacity: 1, y: 0, duration: 0.6, stagger: 0.2, ease: 'power2.out' }
-    );
-
-    tl.fromTo(
+      { opacity: 0, y: 50 },
+      { opacity: 1, y: 0, duration: 0.8, stagger: 0.2, ease: 'power3.out' },
+      '-=0.6'
+    )
+    .fromTo(
       statement,
-      { opacity: 0, scale: 0.95 },
-      { opacity: 1, scale: 1, duration: 0.8, ease: 'power2.out' },
+      { opacity: 0, scale: 0.9, filter: 'blur(10px)' },
+      { opacity: 1, scale: 1, filter: 'blur(0px)', duration: 1.2, ease: 'power2.out' },
       '-=0.2'
     );
 
@@ -74,29 +79,48 @@ export default function Sustainability({ id, className = '' }: SectionProps) {
   }, []);
 
   return (
-    <section id={id} className={`section py-32 ${className}`}>
-      <div className="max-w-7xl mx-auto">
-        <SectionHeading
-          label="SUSTAINABILITY"
-          title="Brewing a Better Future"
-        />
+    <section id={id} className={`section py-40 relative ${className}`}>
+      {/* Background decoration */}
+      <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-gold-500/20 to-transparent"></div>
+      
+      <div ref={containerRef} className="max-w-7xl mx-auto relative z-10 w-full">
+        <div className="animate-text flex flex-col items-center text-center">
+          <SectionHeading
+            label="SUSTAINABILITY"
+            title="Brewing a Better Future"
+            align="center"
+          />
+        </div>
 
-        <div ref={containerRef} className="mt-16">
-          <div className="grid md:grid-cols-3 gap-8">
+        <div className="mt-24 lg:mt-32">
+          <div className="grid xl:grid-cols-3 gap-8 md:gap-12">
             {metrics.map((metric, i) => (
-              <GlassCard key={i} className="sustain-card border-t-2 border-t-gold-500 pt-8">
-                <div className="w-12 h-12 rounded-full border border-gold-500/30 flex items-center justify-center bg-gold-500/10 mb-6">
+              <div key={i} className="sustain-card relative p-10 lg:p-12 rounded-3xl bg-gradient-to-br from-white/[0.04] to-transparent border border-white/[0.08] backdrop-blur-xl overflow-hidden group flex flex-col justify-start min-h-[380px]">
+                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-gold-600 to-copper-500 transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-700 ease-out"></div>
+                
+                {/* Top: Icon */}
+                <div className="w-16 h-16 rounded-2xl border border-gold-500/20 flex items-center justify-center bg-gradient-to-br from-gold-500/5 to-transparent group-hover:border-gold-500/40 group-hover:bg-gold-500/10 transition-all duration-500 shrink-0 mb-8">
                   {metric.icon}
                 </div>
-                <h3 className="heading-3 text-text-primary">{metric.title}</h3>
-                <p className="body-base mt-4 text-steel-300">{metric.desc}</p>
-              </GlassCard>
+
+                {/* Text */}
+                <div className="w-full">
+                  <h3 className="text-2xl lg:text-3xl font-bold text-white mb-4 tracking-tight">{metric.title}</h3>
+                  <p className="text-base lg:text-lg text-steel-400 leading-relaxed group-hover:text-steel-300 transition-colors duration-300">{metric.desc}</p>
+                </div>
+              </div>
             ))}
           </div>
 
-          <h2 className="statement heading-2 text-center mt-32 text-gradient-gold">
-            Every drop counts. Every process matters.
-          </h2>
+          <div className="mt-32 lg:mt-40 relative py-24 px-12 md:px-20 rounded-[3rem] overflow-hidden border border-white/5 bg-gradient-to-br from-[#0a0a0a] to-[#111111]">
+            <div className="absolute inset-0 bg-gradient-to-r from-primary-900 via-[#0a0a0a] to-primary-900 z-0"></div>
+            <div className="absolute inset-0 bg-[url('/noise.png')] opacity-20 mix-blend-overlay z-0"></div>
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gold-500/10 rounded-full blur-[100px] z-0 pointer-events-none"></div>
+            
+            <h2 className="statement relative z-10 heading-display text-center text-gradient-gold max-w-4xl mx-auto leading-tight">
+              Every drop counts. Every process matters.
+            </h2>
+          </div>
         </div>
       </div>
     </section>

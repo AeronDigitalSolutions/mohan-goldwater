@@ -46,7 +46,11 @@ export default function TextReveal({
   return (
     <Component ref={containerRef as any} className={className}>
       {words.map((word, i) => (
-        <span key={i} className="inline-block overflow-hidden mr-[0.25em] align-top">
+        <span 
+          key={i} 
+          className="inline-block overflow-hidden align-top"
+          style={{ marginRight: i === words.length - 1 ? '0' : '0.25em' }}
+        >
           <span className="reveal-inner inline-block translate-y-[110%] pb-1">
             {word}
           </span>

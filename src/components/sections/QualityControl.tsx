@@ -1,88 +1,135 @@
 'use client';
 
 import SectionHeading from '../ui/SectionHeading';
-import GlassCard from '../ui/GlassCard';
 import { SectionProps } from '@/types';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useEffect, useRef } from 'react';
+import { ShieldCheck, Leaf, Settings, Globe2, Activity, FlaskConical, ArrowRight } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
 const qualityPoints = [
-  'ISO Certified Processes',
-  'Zero Effluent Discharge',
-  'Fully Automated Production',
-  'International Quality Audits',
-  'Real-time Quality Monitoring',
-  'Stringent Raw Material Testing',
+  { 
+    title: 'ISO Certified', 
+    desc: 'Internationally recognized processes ensuring consistent excellence.',
+    icon: ShieldCheck
+  },
+  { 
+    title: 'Zero Effluent', 
+    desc: 'Advanced discharge technology protecting our environment.',
+    icon: Leaf
+  },
+  { 
+    title: 'Fully Automated', 
+    desc: 'Precision engineering minimizing human error in production.',
+    icon: Settings
+  },
+  { 
+    title: 'Global Audits', 
+    desc: 'Regular international quality assessments and compliance.',
+    icon: Globe2
+  },
+  { 
+    title: 'Real-time Monitoring', 
+    desc: '24/7 sensor-driven quality tracking at every stage.',
+    icon: Activity
+  },
+  { 
+    title: 'Stringent Testing', 
+    desc: 'Rigorous raw material selection and batch validation.',
+    icon: FlaskConical
+  },
 ];
 
 export default function QualityControl({ id, className = '' }: SectionProps) {
-  const listRef = useRef<HTMLUListElement>(null);
+  const gridRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!listRef.current) return;
+    if (!gridRef.current) return;
 
-    const items = listRef.current.querySelectorAll('li');
+    const cards = gridRef.current.querySelectorAll('.quality-card');
 
-    const st = ScrollTrigger.create({
-      trigger: listRef.current,
-      start: 'top 85%',
-      animation: gsap.fromTo(
-        items,
-        { opacity: 0, x: -20 },
-        { opacity: 1, x: 0, duration: 0.6, stagger: 0.1, ease: 'power2.out' }
-      ),
-    });
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        cards,
+        { 
+          opacity: 0, 
+          y: 40,
+          scale: 0.95
+        },
+        { 
+          opacity: 1, 
+          y: 0, 
+          scale: 1,
+          duration: 1, 
+          stagger: 0.15, 
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: gridRef.current,
+            start: 'top 80%',
+          }
+        }
+      );
+    }, gridRef);
 
-    return () => {
-      st.kill();
-    };
+    return () => ctx.revert();
   }, []);
 
   return (
-    <section id={id} className={`section py-32 ${className}`}>
-      <div className="max-w-7xl mx-auto">
-        <SectionHeading
-          label="QUALITY"
-          title="Uncompromising Standards"
-        />
+    <section id={id} className={`section py-32 bg-[#050505] relative overflow-hidden ${className}`}>
+      
+      {/* Subtle background element */}
+      <div className="absolute top-0 right-0 w-[50vw] h-[50vw] bg-gold-500/5 rounded-full blur-[150px] pointer-events-none translate-x-1/3 -translate-y-1/3" />
 
-        <div className="grid md:grid-cols-2 gap-16 mt-16">
-          <div className="flex flex-col justify-center">
-            <p className="body-large text-steel-200">
-              At Mohan Goldwater Breweries Limited, quality is not just a department—it is our foundational principle. Our fully automated facility ensures consistency across millions of hectoliters, while our zero effluent discharge technology demonstrates that scale never has to come at the expense of environmental responsibility or hygiene.
-            </p>
-          </div>
-
-          <div>
-            <GlassCard>
-              <ul ref={listRef} className="space-y-6">
-                {qualityPoints.map((point, i) => (
-                  <li key={i} className="flex items-center gap-4">
-                    <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gold-500/20 flex items-center justify-center border border-gold-500/50">
-                      <svg
-                        className="w-5 h-5 text-gold-500"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        strokeWidth={2}
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M5 13l4 4L19 7"
-                        />
-                      </svg>
-                    </div>
-                    <span className="body-base text-text-primary">{point}</span>
-                  </li>
-                ))}
-              </ul>
-            </GlassCard>
-          </div>
+      <div className="max-w-7xl w-full mx-auto relative z-10">
+        <div className="flex flex-col items-center text-center max-w-4xl mx-auto mb-20 pt-4">
+          <span className="label block mb-6 text-gold-500 tracking-[0.2em] font-bold text-xs uppercase">QUALITY CONTROL</span>
+          <h2 className="heading-2 mb-8 leading-tight">Uncompromising Standards</h2>
+          <p className="body-large text-steel-400 leading-relaxed">
+            At Mohan Goldwater Breweries Limited, quality is our foundational principle. Our fully automated facility ensures consistency across millions of hectoliters, while our zero effluent discharge technology demonstrates that scale never has to come at the expense of environmental responsibility.
+          </p>
         </div>
+
+        {/* Cards Grid */}
+        <div ref={gridRef} className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+              {qualityPoints.map((point, i) => {
+                const Icon = point.icon;
+                return (
+                  <div 
+                    key={i} 
+                    className="quality-card group p-8 lg:p-10 rounded-[2rem] bg-[#111111] border border-white/5 hover:border-gold-500/30 hover:bg-[#151515] transition-all duration-500 flex flex-col min-h-[300px]"
+                  >
+                    {/* Top Row: Icon & Number */}
+                    <div className="flex justify-between items-start w-full">
+                      <div className="w-16 h-16 lg:w-20 lg:h-20 rounded-full border border-gold-500/20 flex items-center justify-center bg-gold-500/5 text-gold-500 group-hover:scale-110 group-hover:bg-gold-500/10 transition-all duration-500 shrink-0">
+                        <Icon className="w-8 h-8 lg:w-10 lg:h-10 stroke-[1.5]" />
+                      </div>
+                      <span className="text-white/20 font-mono text-base lg:text-lg tracking-wider font-bold mt-2">
+                        {String(i + 1).padStart(2, '0')}
+                      </span>
+                    </div>
+                    
+                    {/* Middle: Text */}
+                    <div className="w-full mt-8 mb-6">
+                      <h4 className="text-xl lg:text-2xl font-bold text-white mb-3 tracking-tight leading-snug">{point.title}</h4>
+                      <p className="text-steel-400 text-sm lg:text-base leading-relaxed group-hover:text-steel-300 transition-colors duration-300">
+                        {point.desc}
+                      </p>
+                    </div>
+
+                    {/* Flexible Spacer to push footer to the bottom */}
+                    <div className="flex-grow" />
+
+                    {/* Bottom: Link */}
+                    <div className="w-full pt-6 border-t border-white/10 flex items-center text-gold-500 text-sm lg:text-base font-bold tracking-widest uppercase opacity-80 group-hover:opacity-100 transition-opacity">
+                      <span>Explore</span>
+                      <ArrowRight className="w-5 h-5 ml-3 group-hover:translate-x-2 transition-transform" />
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
       </div>
     </section>
   );

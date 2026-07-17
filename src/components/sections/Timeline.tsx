@@ -3,7 +3,7 @@
 import { useRef, useEffect } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { motion } from 'framer-motion';
+import { SectionProps } from '@/types';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -40,45 +40,74 @@ const events = [
   },
 ];
 
-import { SectionProps } from '@/types';
-
 export default function Timeline({ id, className = '' }: SectionProps) {
   const sectionRef = useRef<HTMLElement>(null);
   const lineRef = useRef<HTMLDivElement>(null);
-  const cardsRef = useRef<HTMLDivElement[]>([]);
+  const rowsRef = useRef<HTMLDivElement[]>([]);
+  const cardsLeftRef = useRef<HTMLDivElement[]>([]);
+  const cardsRightRef = useRef<HTMLDivElement[]>([]);
+  const cardsMobileRef = useRef<HTMLDivElement[]>([]);
+  const dotsRef = useRef<HTMLDivElement[]>([]);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
       // Draw the timeline line progressively
       if (lineRef.current) {
-        gsap.from(lineRef.current, {
-          scaleY: 0,
-          transformOrigin: 'top center',
-          ease: 'none',
+        gsap.fromTo(
+          lineRef.current,
+          { scaleY: 0 },
+          {
+            scaleY: 1,
+            transformOrigin: 'top center',
+            ease: 'none',
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: 'top 50%',
+              end: 'bottom 80%',
+              scrub: 1,
+            },
+          }
+        );
+      }
+
+      // Cards and dots reveal based on scroll
+      rowsRef.current.forEach((row, i) => {
+        if (!row) return;
+        const isLeft = i % 2 === 0;
+        const desktopCard = isLeft ? cardsLeftRef.current[i] : cardsRightRef.current[i];
+        const mobileCard = cardsMobileRef.current[i];
+        const dot = dotsRef.current[i];
+        
+        const tl = gsap.timeline({
           scrollTrigger: {
-            trigger: sectionRef.current,
-            start: 'top 60%',
-            end: 'bottom 40%',
+            trigger: row,
+            start: 'top 75%',
+            end: 'top 50%',
             scrub: 1,
           },
         });
-      }
 
-      // Stagger cards from alternating sides
-      cardsRef.current.forEach((card, i) => {
-        if (!card) return;
-        const isLeft = i % 2 === 0;
-        gsap.from(card, {
-          opacity: 0,
-          x: isLeft ? -60 : 60,
-          duration: 0.8,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: card,
-            start: 'top 85%',
-            toggleActions: 'play none none reverse',
-          },
-        });
+        if (dot) {
+          tl.fromTo(dot, { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.2 });
+        }
+
+        if (desktopCard) {
+          tl.fromTo(
+            desktopCard,
+            { opacity: 0, x: isLeft ? -100 : 100, y: 50 },
+            { opacity: 1, x: 0, y: 0, duration: 0.8, ease: 'power3.out' },
+            '-=0.1'
+          );
+        }
+
+        if (mobileCard) {
+          tl.fromTo(
+            mobileCard,
+            { opacity: 0, x: 100, y: 50 },
+            { opacity: 1, x: 0, y: 0, duration: 0.8, ease: 'power3.out' },
+            '-=0.1'
+          );
+        }
       });
     }, sectionRef);
 
@@ -87,67 +116,84 @@ export default function Timeline({ id, className = '' }: SectionProps) {
 
   return (
     <section id={id} ref={sectionRef} className={`section py-32 relative overflow-hidden ${className}`}>
+
       {/* Section Heading */}
-      <div className="text-center mb-20">
-        <span className="label">OUR JOURNEY</span>
-        <h2 className="heading-2 mt-4">Milestones That Define Us</h2>
-        <div className="golden-line mt-6 mx-auto" style={{ width: '80px' }} />
+      <div className="text-center mb-32 relative z-20">
+        <span className="label block mb-4 text-steel-400">OUR JOURNEY</span>
+        <h2 className="heading-2">Milestones That Define Us</h2>
+        <div className="golden-line mt-8 mx-auto" style={{ width: '80px' }} />
       </div>
 
       {/* Timeline */}
-      <div className="relative max-w-5xl mx-auto">
+      <div className="timeline-container">
+        
         {/* Vertical Line */}
         <div
           ref={lineRef}
-          className="absolute left-4 md:left-1/2 md:-translate-x-px top-0 bottom-0 w-px"
+          className="absolute timeline-line top-0 bottom-0 w-[2px] origin-top z-0"
           style={{
-            background:
-              'linear-gradient(180deg, transparent, var(--gold-500) 10%, var(--gold-400) 50%, var(--gold-500) 90%, transparent)',
+            background: 'linear-gradient(180deg, transparent, var(--gold-500) 10%, var(--gold-400) 50%, var(--gold-500) 90%, transparent)',
           }}
         />
 
         {/* Events */}
-        <div className="flex flex-col gap-12">
+        <div className="flex flex-col w-full relative z-10" style={{ gap: '120px' }}>
           {events.map((event, i) => {
             const isLeft = i % 2 === 0;
+
             return (
-              <div
-                key={event.year}
-                className={`relative flex items-start ${
-                  isLeft
-                    ? 'md:flex-row md:text-right'
-                    : 'md:flex-row-reverse md:text-left'
-                } flex-row`}
+              <div 
+                key={event.year} 
+                ref={(el) => { if (el) rowsRef.current[i] = el; }}
+                className="relative w-full flex items-center justify-center min-h-[150px]"
               >
-                {/* Card Side */}
-                <div className="flex-1 hidden md:block" />
-
-                {/* Dot */}
-                <div className="relative z-10 flex-shrink-0 mx-0 md:mx-6">
-                  <motion.div
-                    className="w-4 h-4 rounded-full bg-gold-500 border-4 border-primary-900"
-                    whileHover={{ scale: 1.5 }}
-                    transition={{ type: 'spring', stiffness: 400 }}
-                  />
-                </div>
-
-                {/* Card */}
-                <div className="flex-1">
-                  <motion.div
-                    ref={(el) => {
-                      if (el) cardsRef.current[i] = el;
-                    }}
-                    className="glass-card ml-4 md:ml-0"
-                    whileHover={{ scale: 1.02 }}
-                    transition={{ type: 'spring', stiffness: 300 }}
-                  >
-                    <div className="heading-2 text-gradient-gold">
-                      {event.year}
+                 
+                 {/* Desktop Left Side */}
+                 <div className="hidden md:flex w-1/2 justify-end items-center" style={{ paddingRight: '4rem' }}>
+                    <div 
+                      ref={(el) => { if (el) cardsLeftRef.current[i] = el; }}
+                      className="glass-card p-10 max-w-xl w-full text-right"
+                      style={{ display: isLeft ? 'block' : 'none' }}
+                    >
+                       <div className="heading-2 text-gradient-gold mb-2">{event.year}</div>
+                       <h3 className="heading-3 text-white mb-3">{event.title}</h3>
+                       <p className="body-base text-steel-400">{event.desc}</p>
                     </div>
-                    <h3 className="heading-3 mt-2">{event.title}</h3>
-                    <p className="body-base mt-2">{event.desc}</p>
-                  </motion.div>
-                </div>
+                 </div>
+
+                 {/* The Dot */}
+                 <div className="absolute timeline-dot z-20 flex items-center justify-center w-8 h-8">
+                    <div 
+                       ref={(el) => { if (el) dotsRef.current[i] = el; }}
+                       className="w-5 h-5 rounded-full bg-primary-900 border-[3px] border-gold-500 shadow-[0_0_15px_rgba(212,175,55,0.8)]"
+                    />
+                 </div>
+
+                 {/* Desktop Right Side */}
+                 <div className="hidden md:flex w-1/2 justify-start items-center" style={{ paddingLeft: '4rem' }}>
+                    <div 
+                      ref={(el) => { if (el) cardsRightRef.current[i] = el; }}
+                      className="glass-card p-10 max-w-xl w-full text-left"
+                      style={{ display: !isLeft ? 'block' : 'none' }}
+                    >
+                       <div className="heading-2 text-gradient-gold mb-2">{event.year}</div>
+                       <h3 className="heading-3 text-white mb-3">{event.title}</h3>
+                       <p className="body-base text-steel-400">{event.desc}</p>
+                    </div>
+                 </div>
+
+                 {/* Mobile View */}
+                 <div className="flex md:hidden w-full justify-start pl-16">
+                    <div 
+                      ref={(el) => { if (el) cardsMobileRef.current[i] = el; }}
+                      className="glass-card p-8 w-full text-left"
+                    >
+                       <div className="heading-2 text-gradient-gold mb-2">{event.year}</div>
+                       <h3 className="heading-3 text-white mb-3">{event.title}</h3>
+                       <p className="body-base text-steel-400">{event.desc}</p>
+                    </div>
+                 </div>
+
               </div>
             );
           })}
