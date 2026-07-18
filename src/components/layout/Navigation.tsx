@@ -108,7 +108,7 @@ export default function Navigation() {
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
-    setIsOpen(false);
+    setMobileOpen(false);
     
     const target = document.querySelector(href);
     if (target) {
