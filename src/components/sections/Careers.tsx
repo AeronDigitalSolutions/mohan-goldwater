@@ -36,11 +36,18 @@ export default function Careers({ id, className = '' }: SectionProps) {
       id={id}
       className={`section min-h-screen flex items-center justify-center text-center relative overflow-hidden py-40 ${className}`}
     >
-      {/* Dynamic Background */}
-      <div className="absolute inset-0 z-0">
-        <div className="absolute inset-0 bg-gradient-to-b from-primary-900 via-primary-800 to-primary-900"></div>
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[100vw] h-[100vw] max-w-[1200px] max-h-[1200px] bg-[radial-gradient(circle,_rgba(200,130,14,0.08)_0%,_transparent_70%)] rounded-full blur-[80px]"></div>
-      </div>
+      {/* Fixed Background Image */}
+      <div 
+        className="absolute inset-0 z-0 bg-fixed bg-cover bg-center"
+        style={{ backgroundImage: "url('/assets/futureofbrewing.png')" }}
+      />
+      
+      {/* Dark Overlay for Text Readability */}
+      <div className="absolute inset-0 z-0 bg-primary-900/80 mix-blend-multiply" />
+      <div className="absolute inset-0 z-0 bg-gradient-to-b from-primary-900 via-primary-900/50 to-primary-900 opacity-90" />
+      
+      {/* Golden Glow Accent */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[100vw] h-[100vw] max-w-[1200px] max-h-[1200px] bg-[radial-gradient(circle,_rgba(200,130,14,0.15)_0%,_transparent_70%)] rounded-full blur-[80px] z-0 pointer-events-none"></div>
 
       <div ref={containerRef} className="max-w-5xl mx-auto relative z-10 w-full">
         <div className="animate-up flex flex-col items-center">

@@ -7,26 +7,27 @@ import { SectionProps } from '@/types';
 
 gsap.registerPlugin(ScrollTrigger);
 
+import Image from 'next/image';
+
 export default function HeroSection({ id, className = '' }: SectionProps) {
   const sectionRef = useRef<HTMLElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
-  const orbRef = useRef<HTMLDivElement>(null);
+  const bgRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      if (!contentRef.current || !sectionRef.current) return;
+      if (!contentRef.current || !sectionRef.current || !bgRef.current) return;
 
-      // Orb Pulse Animation
-      if (orbRef.current) {
-        gsap.to(orbRef.current, {
-          scale: 1.15,
-          opacity: 0.8,
-          duration: 4,
-          yoyo: true,
-          repeat: -1,
-          ease: 'sine.inOut',
-        });
-      }
+      // Subtle Ken Burns scale effect on load
+      gsap.fromTo(
+        bgRef.current,
+        { scale: 1.05 },
+        {
+          scale: 1,
+          duration: 10,
+          ease: 'power1.out',
+        }
+      );
 
       // Dramatic Entrance Animation for Text
       const elements = contentRef.current.children;
@@ -41,10 +42,22 @@ export default function HeroSection({ id, className = '' }: SectionProps) {
         delay: 0.2,
       });
 
-      // Scroll Parallax
+      // Scroll Parallax for Content
       gsap.to(contentRef.current, {
         y: -150,
         opacity: 0,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top top',
+          end: 'bottom top',
+          scrub: true,
+        },
+      });
+
+      // Scroll Parallax for Background (moves slower than content)
+      gsap.to(bgRef.current, {
+        y: '20%',
         ease: 'none',
         scrollTrigger: {
           trigger: sectionRef.current,
@@ -65,20 +78,25 @@ export default function HeroSection({ id, className = '' }: SectionProps) {
       className={`section-fullscreen min-h-screen flex items-center justify-center relative overflow-hidden ${className}`}
       style={{ perspective: '1000px' }}
     >
-      {/* Massive Glowing Orb */}
-      <div className="absolute inset-0 z-0 flex items-center justify-center pointer-events-none">
-        <div
-          ref={orbRef}
-          className="w-[600px] h-[600px] md:w-[1000px] md:h-[1000px] rounded-full"
-          style={{
-            background: 'radial-gradient(circle, rgba(212,175,55,0.15) 0%, rgba(0,0,0,0) 65%)',
-            filter: 'blur(50px)',
-          }}
-        />
+      {/* Background Image with Overlay */}
+      <div className="absolute inset-0 z-0 pointer-events-none bg-primary-900">
+        <div ref={bgRef} className="absolute inset-0 w-full h-full will-change-transform">
+          <Image
+            src="/assets/hero-bg.png"
+            alt="MGWBL Brewery Facility"
+            fill
+            priority
+            className="object-cover opacity-80"
+            sizes="100vw"
+          />
+        </div>
+        {/* Gradient Overlay for Text Readability */}
+        <div className="absolute inset-0 bg-gradient-to-t from-primary-900 via-primary-900/30 to-transparent" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,var(--primary-900)_100%)] opacity-40" />
       </div>
 
-      <div ref={contentRef} className="relative z-10 text-center flex flex-col items-center justify-center">
-        <span className="label text-steel-300">
+      <div ref={contentRef} className="relative z-10 text-center flex flex-col items-center justify-center pt-20">
+        <span className="label text-gold-500 tracking-[0.3em]">
           ESTABLISHED 1969
         </span>
 
@@ -88,7 +106,7 @@ export default function HeroSection({ id, className = '' }: SectionProps) {
           <span className="text-gradient-gold">Excellence.</span>
         </h1>
 
-        <p className="body-large mt-8 max-w-xl mx-auto text-steel-300">
+        <p className="body-large mt-8 max-w-xl mx-auto text-steel-200">
           Engineering Trust Since 1969
         </p>
 

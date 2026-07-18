@@ -8,6 +8,8 @@ import { useEffect, useRef } from 'react';
 
 gsap.registerPlugin(ScrollTrigger);
 
+import Image from 'next/image';
+
 const metrics = [
   {
     title: 'Zero Effluent Discharge',
@@ -41,6 +43,7 @@ const metrics = [
 
 export default function Sustainability({ id, className = '' }: SectionProps) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const bgRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -48,40 +51,71 @@ export default function Sustainability({ id, className = '' }: SectionProps) {
     const cards = containerRef.current.querySelectorAll('.sustain-card');
     const statement = containerRef.current.querySelector('.statement');
 
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: containerRef.current,
-        start: 'top 75%',
-      },
-    });
+    const ctx = gsap.context(() => {
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: 'top 75%',
+        },
+      });
 
-    tl.fromTo(
-      textEls,
-      { opacity: 0, y: 40 },
-      { opacity: 1, y: 0, duration: 1, stagger: 0.2, ease: 'power3.out' }
-    )
-    .fromTo(
-      cards,
-      { opacity: 0, y: 50 },
-      { opacity: 1, y: 0, duration: 0.8, stagger: 0.2, ease: 'power3.out' },
-      '-=0.6'
-    )
-    .fromTo(
-      statement,
-      { opacity: 0, scale: 0.9, filter: 'blur(10px)' },
-      { opacity: 1, scale: 1, filter: 'blur(0px)', duration: 1.2, ease: 'power2.out' },
-      '-=0.2'
-    );
+      tl.fromTo(
+        textEls,
+        { opacity: 0, y: 40 },
+        { opacity: 1, y: 0, duration: 1, stagger: 0.2, ease: 'power3.out' }
+      )
+      .fromTo(
+        cards,
+        { opacity: 0, y: 50 },
+        { opacity: 1, y: 0, duration: 0.8, stagger: 0.2, ease: 'power3.out' },
+        '-=0.6'
+      )
+      .fromTo(
+        statement,
+        { opacity: 0, scale: 0.9, filter: 'blur(10px)' },
+        { opacity: 1, scale: 1, filter: 'blur(0px)', duration: 1.2, ease: 'power2.out' },
+        '-=0.2'
+      );
 
-    return () => {
-      tl.kill();
-    };
+      // Parallax for Background Image
+      if (bgRef.current) {
+        gsap.fromTo(
+          bgRef.current,
+          { y: '-10%' },
+          {
+            y: '10%',
+            ease: 'none',
+            scrollTrigger: {
+              trigger: containerRef.current,
+              start: 'top bottom',
+              end: 'bottom top',
+              scrub: true,
+            },
+          }
+        );
+      }
+    }, containerRef);
+
+    return () => ctx.revert();
   }, []);
 
   return (
-    <section id={id} className={`section py-40 relative ${className}`}>
-      {/* Background decoration */}
-      <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-gold-500/20 to-transparent"></div>
+    <section id={id} className={`section py-40 relative overflow-hidden ${className}`}>
+      {/* Background Image with Deep Parallax and Overlays */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        <div ref={bgRef} className="absolute inset-0 w-full h-[120%] -top-[10%]">
+          <Image
+            src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=3000&auto=format&fit=crop"
+            alt="Sustainability and Nature"
+            fill
+            className="object-cover opacity-15 mix-blend-luminosity grayscale"
+            sizes="100vw"
+          />
+        </div>
+        <div className="absolute inset-0 bg-gradient-to-b from-primary-900 via-primary-900/80 to-primary-900"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,var(--primary-900)_100%)]"></div>
+        <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-gold-500/20 to-transparent"></div>
+      </div>
       
       <div ref={containerRef} className="max-w-7xl mx-auto relative z-10 w-full">
         <div className="animate-text flex flex-col items-center text-center">
@@ -112,13 +146,14 @@ export default function Sustainability({ id, className = '' }: SectionProps) {
             ))}
           </div>
 
-          <div className="mt-32 lg:mt-40 relative py-24 px-12 md:px-20 rounded-[3rem] overflow-hidden border border-white/5 bg-gradient-to-br from-[#0a0a0a] to-[#111111]">
+          <div className="mt-32 lg:mt-40 relative py-16 px-8 md:py-20 md:px-16 max-w-5xl mx-auto rounded-[3rem] overflow-hidden border border-white/5 bg-gradient-to-br from-[#0a0a0a] to-[#111111]">
             <div className="absolute inset-0 bg-gradient-to-r from-primary-900 via-[#0a0a0a] to-primary-900 z-0"></div>
             <div className="absolute inset-0 bg-[url('/noise.png')] opacity-20 mix-blend-overlay z-0"></div>
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gold-500/10 rounded-full blur-[100px] z-0 pointer-events-none"></div>
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gold-500/10 rounded-full blur-[100px] z-0 pointer-events-none"></div>
             
-            <h2 className="statement relative z-10 heading-display text-center text-gradient-gold max-w-4xl mx-auto leading-tight">
-              Every drop counts. Every process matters.
+            <h2 className="statement relative z-10 text-4xl md:text-6xl lg:text-7xl font-bold text-center text-gradient-gold leading-tight tracking-tight">
+              Every drop counts.<br />
+              Every process matters.
             </h2>
           </div>
         </div>

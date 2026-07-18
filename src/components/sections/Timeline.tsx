@@ -48,6 +48,7 @@ export default function Timeline({ id, className = '' }: SectionProps) {
   const cardsRightRef = useRef<HTMLDivElement[]>([]);
   const cardsMobileRef = useRef<HTMLDivElement[]>([]);
   const dotsRef = useRef<HTMLDivElement[]>([]);
+  const bottleContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -108,6 +109,7 @@ export default function Timeline({ id, className = '' }: SectionProps) {
             '-=0.1'
           );
         }
+
       });
     }, sectionRef);
 

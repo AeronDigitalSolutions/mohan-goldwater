@@ -8,6 +8,8 @@ import { useEffect, useRef } from 'react';
 
 gsap.registerPlugin(ScrollTrigger);
 
+import Image from 'next/image';
+
 const brands = [
   { name: 'Carlsberg', desc: 'Premium lager, brewed to perfection. A legacy of Danish brewing excellence brought to life in every drop.' },
   { name: 'Tuborg', desc: 'Born in Copenhagen, crafted in India. The pulse of the youth, delivering consistent refreshment.' },
@@ -18,6 +20,7 @@ const regions = ['Uttar Pradesh', 'Delhi', 'Punjab'];
 
 export default function CarlsbergPartnership({ id, className = '' }: SectionProps) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const imageRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -25,34 +28,53 @@ export default function CarlsbergPartnership({ id, className = '' }: SectionProp
     const badges = containerRef.current.querySelectorAll('.region-pill');
     const textElements = containerRef.current.querySelectorAll('.animate-text');
 
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: containerRef.current,
-        start: 'top 75%',
-      },
-    });
+    const ctx = gsap.context(() => {
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: 'top 75%',
+        },
+      });
 
-    tl.fromTo(
-      textElements,
-      { opacity: 0, y: 40 },
-      { opacity: 1, y: 0, duration: 1, stagger: 0.2, ease: 'power3.out' }
-    )
-    .fromTo(
-      cards,
-      { opacity: 0, y: 50 },
-      { opacity: 1, y: 0, duration: 0.8, stagger: 0.15, ease: 'power3.out' },
-      '-=0.6'
-    )
-    .fromTo(
-      badges,
-      { opacity: 0, scale: 0.9 },
-      { opacity: 1, scale: 1, duration: 0.6, stagger: 0.1, ease: 'back.out(1.5)' },
-      '-=0.4'
-    );
+      tl.fromTo(
+        textElements,
+        { opacity: 0, y: 40 },
+        { opacity: 1, y: 0, duration: 1, stagger: 0.2, ease: 'power3.out' }
+      );
 
-    return () => {
-      tl.kill();
-    };
+      if (imageRef.current) {
+        tl.fromTo(
+          imageRef.current,
+          { opacity: 0, scale: 0.9, y: 50 },
+          { opacity: 1, scale: 1, y: 0, duration: 1.2, ease: 'power3.out' },
+          '-=0.6'
+        );
+
+        // Floating animation
+        gsap.to(imageRef.current, {
+          y: -15,
+          duration: 3,
+          repeat: -1,
+          yoyo: true,
+          ease: 'sine.inOut',
+        });
+      }
+
+      tl.fromTo(
+        cards,
+        { opacity: 0, y: 50 },
+        { opacity: 1, y: 0, duration: 0.8, stagger: 0.15, ease: 'power3.out' },
+        '-=0.6'
+      )
+      .fromTo(
+        badges,
+        { opacity: 0, scale: 0.9 },
+        { opacity: 1, scale: 1, duration: 0.6, stagger: 0.1, ease: 'back.out(1.5)' },
+        '-=0.4'
+      );
+    }, containerRef);
+
+    return () => ctx.revert();
   }, []);
 
   return (
@@ -66,19 +88,30 @@ export default function CarlsbergPartnership({ id, className = '' }: SectionProp
       <div ref={containerRef} className="max-w-7xl mx-auto relative z-10 w-full">
 
         {/* Center-Aligned Header Section */}
-        <div className="animate-text text-center max-w-4xl mx-auto">
+        <div className="animate-text text-center max-w-5xl mx-auto mb-8 md:mb-12">
           <SectionHeading
             label="GLOBAL PARTNERSHIP"
             title="Proud Partners of Carlsberg"
             align="center"
           />
-          <p className="body-large mt-10 text-steel-300 leading-relaxed text-lg lg:text-xl mx-auto max-w-3xl">
+          <p className="body-large mt-8 text-steel-300 leading-relaxed text-lg lg:text-xl mx-auto max-w-4xl">
             Since 2015, we have been the trusted manufacturing partner for Carlsberg India, producing some of the world&apos;s most beloved beer brands with unmatched precision and scale.
           </p>
         </div>
 
+        {/* Floating Partnership Image */}
+        <div ref={imageRef} className="relative w-full max-w-5xl mx-auto h-[400px] md:h-[600px] group">
+          <Image
+            src="/assets/carlsberg-bottles.png"
+            alt="Carlsberg Bottles"
+            fill
+            className="object-contain transition-transform duration-1000 group-hover:scale-105 drop-shadow-[0_20px_40px_rgba(0,0,0,0.8)]"
+            sizes="(max-width: 1200px) 100vw, 1200px"
+          />
+        </div>
+
         {/* Brand Cards Grid — Center Aligned */}
-        <div className="grid lg:grid-cols-3 gap-8 mt-24 max-w-6xl mx-auto">
+        <div className="grid lg:grid-cols-3 gap-8 mt-12 md:mt-16 max-w-6xl mx-auto">
           {brands.map((brand, i) => (
             <div
               key={i}

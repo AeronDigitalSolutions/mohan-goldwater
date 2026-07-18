@@ -4,8 +4,11 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+
+import Image from 'next/image';
 
 const NAV_LINKS = [
   { label: 'Company', href: '#company' },
@@ -19,43 +22,55 @@ const NAV_LINKS = [
 export default function Navigation() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [hidden, setHidden] = useState(false);
+  const navRef = useRef<HTMLElement>(null);
   const lastScrollY = useRef(0);
   const progressBarRef = useRef<HTMLDivElement>(null);
-  const navRef = useRef<HTMLElement>(null);
 
-  /* ── Scroll: hide/show nav ── */
-  const handleScroll = useCallback(() => {
-    const y = window.scrollY;
-    if (y > lastScrollY.current && y > 80) {
-      setHidden(true);
-    } else {
-      setHidden(false);
-    }
-    lastScrollY.current = y;
-  }, []);
-
+  // Handle scroll to hide/show navigation
   useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      
+      // Don't hide if menu is open
+      if (mobileOpen) return;
+
+      // Hide nav if scrolling down and past 100px
+      if (currentScrollY > lastScrollY.current && currentScrollY > 100) {
+        setHidden(true);
+      } else {
+        setHidden(false);
+      }
+
+      // Update background blur intensity based on scroll position
+      if (navRef.current) {
+        if (currentScrollY > 50) {
+          navRef.current.classList.add('bg-black/60', 'backdrop-blur-xl', 'border-b', 'border-white/10');
+          navRef.current.classList.remove('bg-transparent');
+        } else {
+          navRef.current.classList.add('bg-transparent');
+          navRef.current.classList.remove('bg-black/60', 'backdrop-blur-xl', 'border-b', 'border-white/10');
+        }
+      }
+
+      lastScrollY.current = currentScrollY;
+    };
+
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [handleScroll]);
+  }, [mobileOpen]);
 
   /* ── Scroll progress bar via GSAP ── */
   useEffect(() => {
-    const bar = progressBarRef.current;
-    if (!bar) return;
-
-    const trigger = ScrollTrigger.create({
-      trigger: document.documentElement,
-      start: 'top top',
-      end: 'bottom bottom',
-      onUpdate: (self) => {
-        bar.style.transform = `scaleX(${self.progress})`;
+    gsap.to(progressBarRef.current, {
+      scaleX: 1,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: document.body,
+        start: 'top top',
+        end: 'bottom bottom',
+        scrub: 0.3,
       },
     });
-
-    return () => {
-      trigger.kill();
-    };
   }, []);
 
   /* ── Lock body scroll when mobile menu open ── */
@@ -65,6 +80,46 @@ export default function Navigation() {
       document.body.style.overflow = '';
     };
   }, [mobileOpen]);
+
+  // Handle magnetic effect for links
+  const handleMagnetic = useCallback((e: React.MouseEvent<HTMLAnchorElement>) => {
+    const el = e.currentTarget;
+    const boundingRect = el.getBoundingClientRect();
+    const x = e.clientX - boundingRect.left - boundingRect.width / 2;
+    const y = e.clientY - boundingRect.top - boundingRect.height / 2;
+
+    gsap.to(el, {
+      x: x * 0.4,
+      y: y * 0.4,
+      duration: 0.6,
+      ease: 'power3.out',
+    });
+  }, []);
+
+  const handleMagneticReset = useCallback((e: React.MouseEvent<HTMLAnchorElement>) => {
+    const el = e.currentTarget;
+    gsap.to(el, {
+      x: 0,
+      y: 0,
+      duration: 0.6,
+      ease: 'elastic.out(1, 0.3)',
+    });
+  }, []);
+
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    setIsOpen(false);
+    
+    const target = document.querySelector(href);
+    if (target) {
+      // Use GSAP for smooth scrolling
+      gsap.to(window, {
+        duration: 1,
+        scrollTo: { y: target, offsetY: 80 },
+        ease: 'power3.inOut',
+      });
+    }
+  };
 
   return (
     <>
@@ -80,18 +135,24 @@ export default function Navigation() {
         />
       </div>
 
-      {/* Navigation */}
       <motion.nav
         ref={navRef}
-        className="glass-nav fixed top-0 left-0 w-full z-50 px-[var(--section-padding-x)]"
+        className="glass-nav fixed top-0 left-0 w-full z-50 px-[var(--section-padding-x)] transition-all duration-300"
         initial={{ y: 0 }}
         animate={{ y: hidden ? -100 : 0 }}
         transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
       >
         <div className="flex items-center justify-between h-16 md:h-20 max-w-[1600px] mx-auto">
           {/* Logo */}
-          <a href="/" className="text-gradient-gold font-bold text-xl tracking-tight">
-            MGWBL
+          <a href="/" className="flex items-center gap-3 group">
+            <Image 
+              src="/assets/logo.jpeg" 
+              alt="MGWBL Logo" 
+              width={40} 
+              height={40} 
+              className="rounded-full overflow-hidden object-cover transition-transform duration-500 group-hover:scale-110" 
+            />
+            <span className="text-gradient-gold font-bold text-xl tracking-tight hidden sm:block">MGWBL</span>
           </a>
 
           {/* Desktop Links */}
