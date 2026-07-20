@@ -115,7 +115,7 @@ export default function CarlsbergPartnership({ id, className = '' }: SectionProp
           {brands.map((brand, i) => (
             <div
               key={i}
-              className="brand-card group relative px-10 py-12 lg:px-12 lg:py-14 rounded-3xl bg-gradient-to-br from-white/[0.04] to-transparent border border-white/[0.08] backdrop-blur-2xl transition-all duration-500 hover:border-gold-500/30 hover:bg-white/[0.08] flex flex-col items-center justify-center text-center min-h-[400px]"
+              className="brand-card group relative px-10 py-12 lg:px-12 lg:py-14 rounded-3xl bg-gradient-to-br from-white/[0.04] [.light_&]:from-black/[0.02] to-transparent border border-white/[0.08] [.light_&]:border-black/10 backdrop-blur-2xl transition-all duration-500 hover:border-gold-500/30 [.light_&]:hover:border-gold-500/40 hover:bg-white/[0.08] [.light_&]:hover:bg-white flex flex-col items-center justify-center text-center min-h-[400px] [.light_&]:shadow-[0_8px_30px_rgb(0,0,0,0.04)]"
             >
               {/* Hover glow overlay */}
               <div className="absolute inset-0 bg-gradient-to-b from-gold-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl pointer-events-none"></div>
@@ -127,8 +127,8 @@ export default function CarlsbergPartnership({ id, className = '' }: SectionProp
 
               {/* Vertically Centered Content */}
               <div className="relative z-10">
-                <h3 className="text-3xl lg:text-4xl font-bold text-white mb-6 tracking-tight">{brand.name}</h3>
-                <p className="text-base lg:text-lg text-steel-400 leading-relaxed group-hover:text-steel-300 transition-colors duration-300 max-w-xs mx-auto">
+                <h3 className="text-3xl lg:text-4xl font-bold text-white [.light_&]:text-[#050505] mb-6 tracking-tight transition-colors duration-500">{brand.name}</h3>
+                <p className="text-base lg:text-lg text-steel-400 [.light_&]:text-gray-600 leading-relaxed group-hover:text-steel-300 [.light_&]:group-hover:text-[#050505] transition-colors duration-300 max-w-xs mx-auto">
                   {brand.desc}
                 </p>
               </div>
@@ -137,17 +137,17 @@ export default function CarlsbergPartnership({ id, className = '' }: SectionProp
         </div>
 
         {/* Market Coverage — Premium Pill Buttons */}
-        <div className="mt-24 pt-16 border-t border-white/10 text-center">
+        <div className="mt-24 pt-16 border-t border-white/10 [.light_&]:border-black/10 text-center transition-colors duration-500">
           <span className="animate-text label block mb-10 text-gold-500 tracking-[0.2em] uppercase text-sm font-bold">Market Coverage</span>
 
           <div className="flex flex-wrap justify-center gap-6">
             {regions.map((region, i) => (
               <div
                 key={i}
-                className="region-pill px-10 py-5 rounded-full border border-white/10 bg-white/[0.03] backdrop-blur-xl flex items-center gap-4 transition-all duration-500 hover:border-gold-500/40 hover:bg-gold-500/10 cursor-default group"
+                className="region-pill px-10 py-5 rounded-full border border-white/10 [.light_&]:border-black/10 bg-white/[0.03] [.light_&]:bg-black/[0.03] backdrop-blur-xl flex items-center gap-4 transition-all duration-500 hover:border-gold-500/40 [.light_&]:hover:border-gold-500/40 hover:bg-gold-500/10 [.light_&]:hover:bg-gold-500/10 cursor-default group"
               >
                 <div className="w-2.5 h-2.5 rounded-full bg-gold-500/60 group-hover:bg-gold-500 group-hover:shadow-[0_0_12px_rgba(200,130,14,0.6)] transition-all duration-500"></div>
-                <span className="text-lg lg:text-xl font-medium text-steel-200 group-hover:text-white transition-colors tracking-wide">{region}</span>
+                <span className="text-lg lg:text-xl font-medium text-steel-200 [.light_&]:text-[#050505] group-hover:text-white transition-colors tracking-wide">{region}</span>
               </div>
             ))}
           </div>

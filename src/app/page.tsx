@@ -64,7 +64,7 @@ export default function HomePage() {
           <QualityControl id="quality" />
           <CarlsbergPartnership id="partnership" />
           <Sustainability id="sustainability" />
-          <Leadership id="leadership" />
+          {/* Leadership section removed for now, can be added back later */}
           <Careers id="careers" />
           <Contact id="contact" />
           <Footer />

@@ -15,7 +15,7 @@ const metrics = [
     title: 'Zero Effluent Discharge',
     desc: 'Advanced water treatment ensures every drop is recycled, setting industry benchmarks for environmental responsibility.',
     icon: (
-      <svg className="w-8 h-8 text-gold-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+      <svg className="w-8 h-8 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
       </svg>
     ),
@@ -24,7 +24,7 @@ const metrics = [
     title: 'Energy Efficient',
     desc: 'Modern energy management systems reduce our carbon footprint while maintaining peak production output seamlessly.',
     icon: (
-      <svg className="w-8 h-8 text-gold-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+      <svg className="w-8 h-8 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
       </svg>
     ),
@@ -33,7 +33,7 @@ const metrics = [
     title: 'Fully Automated',
     desc: 'Precision automation minimizes waste and ensures consistent quality in every single batch produced.',
     icon: (
-      <svg className="w-8 h-8 text-gold-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+      <svg className="w-8 h-8 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
         <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
       </svg>
@@ -129,18 +129,18 @@ export default function Sustainability({ id, className = '' }: SectionProps) {
         <div className="mt-24 lg:mt-32">
           <div className="grid xl:grid-cols-3 gap-8 md:gap-12">
             {metrics.map((metric, i) => (
-              <div key={i} className="sustain-card relative p-10 lg:p-12 rounded-3xl bg-gradient-to-br from-white/[0.04] to-transparent border border-white/[0.08] backdrop-blur-xl overflow-hidden group flex flex-col justify-start min-h-[380px]">
-                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-gold-600 to-copper-500 transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-700 ease-out"></div>
+              <div key={i} className="sustain-card relative p-10 lg:p-12 rounded-3xl bg-gradient-to-br from-white/[0.04] to-transparent [.light_&]:bg-white [.light_&]:bg-none border border-white/[0.08] [.light_&]:border-black/5 backdrop-blur-xl overflow-hidden group flex flex-col justify-start min-h-[380px] transition-all duration-500 [.light_&]:shadow-[0_4px_20px_rgb(0,0,0,0.02)] [.light_&]:hover:shadow-[0_20px_50px_rgba(0,0,0,0.08)] [.light_&]:hover:-translate-y-2">
+                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-green-600 to-emerald-500 transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-700 ease-out"></div>
                 
                 {/* Top: Icon */}
-                <div className="w-16 h-16 rounded-2xl border border-gold-500/20 flex items-center justify-center bg-gradient-to-br from-gold-500/5 to-transparent group-hover:border-gold-500/40 group-hover:bg-gold-500/10 transition-all duration-500 shrink-0 mb-8">
+                <div className="w-16 h-16 rounded-2xl border border-green-600/20 flex items-center justify-center bg-gradient-to-br from-green-600/5 to-transparent group-hover:border-green-600/40 group-hover:bg-green-600/10 transition-all duration-500 shrink-0 mb-8">
                   {metric.icon}
                 </div>
 
                 {/* Text */}
                 <div className="w-full">
-                  <h3 className="text-2xl lg:text-3xl font-bold text-white mb-4 tracking-tight">{metric.title}</h3>
-                  <p className="text-base lg:text-lg text-steel-400 leading-relaxed group-hover:text-steel-300 transition-colors duration-300">{metric.desc}</p>
+                  <h3 className="text-2xl lg:text-3xl font-bold text-white [.light_&]:text-[#050505] mb-4 tracking-tight transition-colors duration-500">{metric.title}</h3>
+                  <p className="text-base lg:text-lg text-steel-400 [.light_&]:text-gray-600 leading-relaxed group-hover:text-steel-300 [.light_&]:group-hover:text-gray-900 transition-colors duration-300">{metric.desc}</p>
                 </div>
               </div>
             ))}
@@ -149,9 +149,9 @@ export default function Sustainability({ id, className = '' }: SectionProps) {
           <div className="mt-32 lg:mt-40 relative py-16 px-8 md:py-20 md:px-16 max-w-5xl mx-auto rounded-[3rem] overflow-hidden border border-white/5 bg-gradient-to-br from-[#0a0a0a] to-[#111111]">
             <div className="absolute inset-0 bg-gradient-to-r from-primary-900 via-[#0a0a0a] to-primary-900 z-0"></div>
             <div className="absolute inset-0 bg-[url('/noise.png')] opacity-20 mix-blend-overlay z-0"></div>
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gold-500/10 rounded-full blur-[100px] z-0 pointer-events-none"></div>
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-green-600/10 rounded-full blur-[100px] z-0 pointer-events-none"></div>
             
-            <h2 className="statement relative z-10 text-4xl md:text-6xl lg:text-7xl font-bold text-center text-gradient-gold leading-tight tracking-tight">
+            <h2 className="statement relative z-10 text-4xl md:text-6xl lg:text-7xl font-bold text-center text-transparent bg-clip-text bg-gradient-to-br from-green-500 to-green-700 leading-tight tracking-tight">
               Every drop counts.<br />
               Every process matters.
             </h2>

@@ -8,14 +8,16 @@ import { useEffect, useRef } from 'react';
 
 gsap.registerPlugin(ScrollTrigger);
 
+import { User } from 'lucide-react';
+
 const members = [
-  { name: 'Vikas Jaiswal', title: 'Director', initials: 'VJ' },
-  { name: 'Mudit Kumar Gupta', title: 'Director', initials: 'MG' },
-  { name: 'Har Prasad Jaiswal', title: 'Director', initials: 'HJ' },
-  { name: 'Sameer Agrawal', title: 'Director', initials: 'SA' },
-  { name: 'Manmeet Singh Chadha', title: 'Director', initials: 'MC' },
-  { name: 'Baljeet Singh', title: 'Director', initials: 'BS' },
-  { name: 'Munish Saggar', title: 'Chief Financial Officer', initials: 'MS' },
+  { name: 'Vikas Jaiswal', title: 'Director' },
+  { name: 'Mudit Kumar Gupta', title: 'Director' },
+  { name: 'Har Prasad Jaiswal', title: 'Director' },
+  { name: 'Sameer Agrawal', title: 'Director' },
+  { name: 'Manmeet Singh Chadha', title: 'Director' },
+  { name: 'Baljeet Singh', title: 'Director' },
+  { name: 'Munish Saggar', title: 'Chief Financial Officer' },
 ];
 
 export default function Leadership({ id, className = '' }: SectionProps) {
@@ -66,10 +68,10 @@ export default function Leadership({ id, className = '' }: SectionProps) {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mt-20">
           {members.map((member, i) => (
             <div key={i} className="leader-card group relative p-8 rounded-3xl bg-white/[0.02] border border-white/5 hover:border-gold-500/20 hover:bg-white/[0.04] transition-all duration-500 flex flex-col items-center text-center">
-              <div className="w-24 h-24 rounded-full mb-8 relative">
+              <div className="w-24 h-24 shrink-0 rounded-full mb-8 relative">
                 <div className="absolute inset-0 rounded-full bg-gradient-to-br from-gold-500 to-copper-600 animate-spin-slow opacity-20 blur-md group-hover:opacity-40 transition-opacity duration-500"></div>
-                <div className="absolute inset-0 rounded-full bg-gradient-to-br from-gold-500 to-copper-500 flex items-center justify-center text-primary-900 font-bold text-2xl shadow-[0_0_20px_rgba(200,130,14,0.4)] relative z-10 group-hover:scale-105 transition-transform duration-500">
-                  {member.initials}
+                <div className="absolute inset-0 rounded-full bg-gradient-to-br from-gold-500 to-copper-500 flex items-center justify-center shadow-[0_0_20px_rgba(200,130,14,0.4)] relative z-10 group-hover:scale-105 transition-transform duration-500">
+                  <User className="w-10 h-10 text-[#050505] opacity-80" strokeWidth={1.5} />
                 </div>
               </div>
               <h3 className="heading-3 text-text-primary tracking-wide">{member.name}</h3>

@@ -117,7 +117,7 @@ export default function BrewingProcess({ id, className = '' }: SectionProps) {
               key={stage.num}
               className="w-[85vw] md:w-[60vw] lg:w-[45vw] flex-shrink-0 flex items-center justify-center relative"
             >
-              <div className="brew-card w-full aspect-[4/3] md:aspect-[16/10] rounded-3xl py-12 px-12 md:px-24 relative overflow-hidden group border border-white/10 bg-gradient-to-br from-black/80 via-black/90 to-black backdrop-blur-xl flex flex-col justify-center gap-8 md:gap-12">
+              <div className="brew-card w-full aspect-[4/3] md:aspect-[16/10] rounded-3xl py-12 px-12 md:px-24 relative overflow-hidden group border border-white/10 [.light_&]:border-black/5 bg-gradient-to-br from-black/80 via-black/90 to-black [.light_&]:from-white [.light_&]:via-white [.light_&]:to-white [.light_&]:shadow-[0_20px_50px_rgba(0,0,0,0.08)] backdrop-blur-xl flex flex-col justify-center gap-8 md:gap-12 transition-all duration-500">
                 
                 {/* Subtle internal gradient sweep */}
                 <div className="absolute inset-0 bg-gradient-to-tr from-gold-500/0 via-gold-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000 ease-out pointer-events-none" />
@@ -145,11 +145,11 @@ export default function BrewingProcess({ id, className = '' }: SectionProps) {
                 {/* Content */}
                 <div className="relative z-10">
                   <div className="label text-gold-500 mb-4 md:mb-6 tracking-[0.2em]">PHASE {stage.num}</div>
-                  <h3 className="heading-1 text-white leading-tight">{stage.name}</h3>
+                  <h3 className="heading-1 text-white [.light_&]:text-[#050505] leading-tight transition-colors duration-500">{stage.name}</h3>
                 </div>
                 
                 <div className="relative z-10 max-w-lg">
-                  <p className="body-large text-steel-200 leading-relaxed">
+                  <p className="body-large text-steel-200 [.light_&]:text-gray-600 leading-relaxed transition-colors duration-500">
                     {stage.desc}
                   </p>
                 </div>

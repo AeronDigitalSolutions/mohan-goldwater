@@ -55,10 +55,11 @@ export default function Careers({ id, className = '' }: SectionProps) {
             label="JOIN OUR TEAM"
             title="Build the Future of Brewing"
             align="center"
+            titleClassName="!text-white drop-shadow-md"
           />
         </div>
 
-        <p className="animate-up body-large max-w-3xl mx-auto mt-10 text-steel-200 leading-relaxed text-xl md:text-2xl font-light">
+        <p className="animate-up max-w-3xl mx-auto mt-10 !text-white leading-relaxed text-xl md:text-2xl font-bold drop-shadow-md">
           We're always looking for passionate individuals who want to be part of India's brewing revolution. Join a team dedicated to precision, quality, and sustainable manufacturing excellence.
         </p>
 

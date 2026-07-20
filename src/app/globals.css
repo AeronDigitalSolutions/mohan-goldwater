@@ -12,6 +12,15 @@
   --primary-700: #1a1a1a;
   --primary-600: #222222;
 
+  /* Hero Section Overlays */
+  --hero-overlay: transparent;
+  --hero-gradient: transparent;
+  --hero-pill-bg: rgba(255,255,255,0.1);
+  --hero-pill-text: var(--text-primary);
+  --hero-heading-text: var(--text-primary);
+  --hero-excellence-gradient: linear-gradient(135deg, var(--gold-400), var(--copper-500), var(--amber-400));
+  --hero-content-offset: 0px;
+
   /* Stainless Steel */
   --steel-500: #6b6b6b;
   --steel-400: #8a8a8a;
@@ -57,6 +66,48 @@
   --duration-normal: 300ms;
   --duration-slow: 600ms;
   --duration-cinematic: 1200ms;
+}
+
+:root.light {
+  /* Hero Section Overlays for Light Theme */
+  --hero-overlay: #ffffff;
+  --hero-gradient: #ffffff;
+  --hero-pill-bg: #ffffff;
+  --hero-pill-text: #052e16; /* Deep forest green / almost black */
+  --hero-heading-text: #050505; /* Black text for light theme */
+  --hero-excellence-gradient: linear-gradient(135deg, #15803d, #14532d, #064e3b); /* Pure forest green gradient */
+  --hero-content-offset: -30vh;
+
+  /* Global Colors for Light Theme */
+  --primary-900: transparent;
+  --background: transparent;
+  --foreground: #050505;
+
+  /* Text Colors */
+  --text-primary: #050505;
+  --text-secondary: #4a4a4a;
+  --text-muted: #888888;
+
+  /* Glassmorphism for Light Theme */
+  --glass-bg: rgba(255, 255, 255, 0.6);
+  --glass-bg-hover: rgba(255, 255, 255, 0.8);
+  --glass-border: rgba(0, 0, 0, 0.1);
+  --glass-border-hover: rgba(0, 0, 0, 0.2);
+}
+
+body {
+  background-color: #050505;
+  color: var(--foreground);
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+:root.light body {
+  background-color: #f5f5f5;
+  background-image: url('/assets/light-bg.jpg');
+  background-attachment: fixed;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 /* === Tailwind v4 Theme Tokens === */
@@ -151,7 +202,8 @@ body::before {
   font-weight: 700;
   line-height: 0.95;
   letter-spacing: -0.03em;
-  color: var(--text-primary);
+  color: var(--hero-heading-text, var(--text-primary));
+  transition: color 0.5s ease;
 }
 
 .heading-1 {
@@ -229,6 +281,23 @@ body::before {
   border-bottom: 1px solid var(--glass-border);
 }
 
+/* === Hero Images === */
+.hero-img-dark {
+  opacity: 1;
+  transition: opacity 0.5s ease;
+}
+.hero-img-light {
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+:root.light .hero-img-dark {
+  opacity: 0;
+}
+:root.light .hero-img-light {
+  opacity: 1;
+}
+
 /* === Golden Line === */
 .golden-line {
   height: 1px;
@@ -254,12 +323,26 @@ body::before {
   );
 }
 
+/* === Custom Colors === */
+.text-hero-heading {
+  color: var(--hero-heading-text);
+  transition: color 0.5s ease;
+}
+
 /* === Gradient Text === */
 .text-gradient-gold {
   background: linear-gradient(135deg, var(--gold-400), var(--copper-500), var(--amber-400));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+}
+
+.text-gradient-hero-excellence {
+  background: var(--hero-excellence-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  transition: all 0.5s ease;
 }
 
 .text-gradient-steel {

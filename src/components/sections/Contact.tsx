@@ -79,21 +79,21 @@ export default function Contact({ id, className = '' }: SectionProps) {
               <div className="form-field grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div>
                   <label className="block text-xs font-semibold text-gold-500 mb-3 uppercase tracking-widest">Name</label>
-                  <input type="text" className="w-full bg-primary-800/40 border border-white/10 rounded-2xl px-6 py-4 text-text-primary focus:border-gold-500/60 focus:bg-primary-800/60 focus:ring-1 focus:ring-gold-500/60 outline-none transition-all placeholder:text-steel-600" placeholder="John Doe" />
+                  <input type="text" className="w-full bg-primary-800/40 [.light_&]:bg-white border border-white/10 [.light_&]:border-steel-300 [.light_&]:shadow-sm rounded-xl px-6 py-4 text-text-primary focus:border-gold-500/60 [.light_&]:focus:border-gold-500 focus:bg-primary-800/60 [.light_&]:focus:bg-white focus:ring-2 focus:ring-gold-500/60 [.light_&]:focus:ring-gold-500/20 outline-none transition-all placeholder:text-steel-600 [.light_&]:placeholder:text-steel-400" placeholder="John Doe" />
                 </div>
                 <div>
                   <label className="block text-xs font-semibold text-gold-500 mb-3 uppercase tracking-widest">Email</label>
-                  <input type="email" className="w-full bg-primary-800/40 border border-white/10 rounded-2xl px-6 py-4 text-text-primary focus:border-gold-500/60 focus:bg-primary-800/60 focus:ring-1 focus:ring-gold-500/60 outline-none transition-all placeholder:text-steel-600" placeholder="john@example.com" />
+                  <input type="email" className="w-full bg-primary-800/40 [.light_&]:bg-white border border-white/10 [.light_&]:border-steel-300 [.light_&]:shadow-sm rounded-xl px-6 py-4 text-text-primary focus:border-gold-500/60 [.light_&]:focus:border-gold-500 focus:bg-primary-800/60 [.light_&]:focus:bg-white focus:ring-2 focus:ring-gold-500/60 [.light_&]:focus:ring-gold-500/20 outline-none transition-all placeholder:text-steel-600 [.light_&]:placeholder:text-steel-400" placeholder="john@example.com" />
                 </div>
               </div>
               <div className="form-field">
                 <label className="block text-xs font-semibold text-gold-500 mb-3 uppercase tracking-widest">Company</label>
-                <input type="text" className="w-full bg-primary-800/40 border border-white/10 rounded-2xl px-6 py-4 text-text-primary focus:border-gold-500/60 focus:bg-primary-800/60 focus:ring-1 focus:ring-gold-500/60 outline-none transition-all placeholder:text-steel-600" placeholder="Your Organization" />
+                <input type="text" className="w-full bg-primary-800/40 [.light_&]:bg-white border border-white/10 [.light_&]:border-steel-300 [.light_&]:shadow-sm rounded-xl px-6 py-4 text-text-primary focus:border-gold-500/60 [.light_&]:focus:border-gold-500 focus:bg-primary-800/60 [.light_&]:focus:bg-white focus:ring-2 focus:ring-gold-500/60 [.light_&]:focus:ring-gold-500/20 outline-none transition-all placeholder:text-steel-600 [.light_&]:placeholder:text-steel-400" placeholder="Your Organization" />
               </div>
               <div className="form-field">
                 <label className="block text-xs font-semibold text-gold-500 mb-3 uppercase tracking-widest">Inquiry Type</label>
                 <div className="relative">
-                  <select className="w-full bg-primary-800/40 border border-white/10 rounded-2xl px-6 py-4 text-text-primary focus:border-gold-500/60 focus:bg-primary-800/60 focus:ring-1 focus:ring-gold-500/60 outline-none transition-all appearance-none cursor-pointer">
+                  <select className="w-full bg-primary-800/40 [.light_&]:bg-white border border-white/10 [.light_&]:border-steel-300 [.light_&]:shadow-sm rounded-xl px-6 py-4 text-text-primary focus:border-gold-500/60 [.light_&]:focus:border-gold-500 focus:bg-primary-800/60 [.light_&]:focus:bg-white focus:ring-2 focus:ring-gold-500/60 [.light_&]:focus:ring-gold-500/20 outline-none transition-all appearance-none cursor-pointer">
                     <option className="bg-primary-800">General Inquiry</option>
                     <option className="bg-primary-800">Partnership</option>
                     <option className="bg-primary-800">Careers</option>
@@ -106,10 +106,10 @@ export default function Contact({ id, className = '' }: SectionProps) {
               </div>
               <div className="form-field">
                 <label className="block text-xs font-semibold text-gold-500 mb-3 uppercase tracking-widest">Message</label>
-                <textarea rows={5} className="w-full bg-primary-800/40 border border-white/10 rounded-2xl px-6 py-4 text-text-primary focus:border-gold-500/60 focus:bg-primary-800/60 focus:ring-1 focus:ring-gold-500/60 outline-none transition-all resize-none placeholder:text-steel-600" placeholder="How can we help you?"></textarea>
+                <textarea rows={5} className="w-full bg-primary-800/40 [.light_&]:bg-white border border-white/10 [.light_&]:border-steel-300 [.light_&]:shadow-sm rounded-xl px-6 py-4 text-text-primary focus:border-gold-500/60 [.light_&]:focus:border-gold-500 focus:bg-primary-800/60 [.light_&]:focus:bg-white focus:ring-2 focus:ring-gold-500/60 [.light_&]:focus:ring-gold-500/20 outline-none transition-all resize-none placeholder:text-steel-600 [.light_&]:placeholder:text-steel-400" placeholder="How can we help you?"></textarea>
               </div>
               <div className="form-field pt-6">
-                <button className="w-full py-4 text-lg bg-gradient-to-r from-gold-600 to-copper-600 text-white rounded-2xl shadow-[0_0_20px_rgba(200,130,14,0.2)] hover:shadow-[0_0_30px_rgba(200,130,14,0.4)] transition-all font-medium">
+                <button className="w-full py-4 text-lg bg-gold-500 text-primary-900 [.light_&]:text-[#050505] rounded-xl shadow-lg hover:bg-gold-400 hover:shadow-xl hover:-translate-y-1 transition-all font-bold tracking-wide">
                   Send Message
                 </button>
               </div>

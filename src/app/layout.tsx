@@ -38,13 +38,27 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} antialiased`}>
+    <html lang="en" className={`${inter.variable} antialiased`} suppressHydrationWarning>
       <head>
-        <meta name="theme-color" content="#050505" />
+        <meta name="theme-color" content="#ffffff" id="theme-color-meta" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              try {
+                if (localStorage.getItem('mgwbl-theme') === 'dark') {
+                  document.documentElement.classList.remove('light');
+                  document.getElementById('theme-color-meta').setAttribute('content', '#050505');
+                } else {
+                  document.documentElement.classList.add('light');
+                }
+              } catch (_) {}
+            `,
+          }}
+        />
       </head>
-      <body className="min-h-screen bg-primary-900 text-foreground">
+      <body className="min-h-screen">
         {children}
       </body>
     </html>

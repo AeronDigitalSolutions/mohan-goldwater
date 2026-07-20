@@ -9,6 +9,7 @@ import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
 import Image from 'next/image';
+import ThemeToggle from './ThemeToggle';
 
 const NAV_LINKS = [
   { label: 'Company', href: '#company' },
@@ -177,9 +178,13 @@ export default function Navigation() {
             ))}
           </div>
 
-          {/* Mobile Hamburger */}
-          <button
-            className="md:hidden flex flex-col justify-center items-center gap-[5px] w-10 h-10 z-[110]"
+          <div className="flex items-center gap-4 z-[110]">
+            {/* Theme Toggle */}
+            <ThemeToggle />
+
+            {/* Mobile Hamburger */}
+            <button
+              className="md:hidden flex flex-col justify-center items-center gap-[5px] w-10 h-10"
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
           >
@@ -198,7 +203,8 @@ export default function Navigation() {
               animate={mobileOpen ? { rotate: -45, y: -7 } : { rotate: 0, y: 0 }}
               transition={{ duration: 0.3 }}
             />
-          </button>
+            </button>
+          </div>
         </div>
       </motion.nav>
 

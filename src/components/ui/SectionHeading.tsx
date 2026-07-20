@@ -13,6 +13,7 @@ interface SectionHeadingProps {
   description?: string;
   align?: 'left' | 'center';
   className?: string;
+  titleClassName?: string;
 }
 
 export default function SectionHeading({
@@ -21,6 +22,7 @@ export default function SectionHeading({
   description,
   align = 'left',
   className = '',
+  titleClassName = '',
 }: SectionHeadingProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const lineRef = useRef<HTMLDivElement>(null);
@@ -85,7 +87,7 @@ export default function SectionHeading({
       
       {/* Title uses TextReveal which handles its own ScrollTrigger, but we wrap it to maintain spacing */}
       <div className="mt-4">
-         <TextReveal as="h2" className={align === 'center' ? 'heading-2' : 'heading-1'}>{title}</TextReveal>
+         <TextReveal as="h2" className={`${align === 'center' ? 'heading-2' : 'heading-1'} ${titleClassName}`}>{title}</TextReveal>
       </div>
 
       {description && (

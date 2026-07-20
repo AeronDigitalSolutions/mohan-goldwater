@@ -20,23 +20,23 @@ export default function Footer() {
         {/* Column 1 — Brand */}
         <div>
           <h3 className="heading-3 text-gradient-gold mb-4">MGWBL</h3>
-          <p className="body-base mb-4">
+          <p className="body-base !text-steel-300 mb-4">
             Mohan Goldwater Breweries Limited — where engineering precision meets
             brewing excellence. Crafting India&apos;s finest beverages with
             unwavering commitment to quality.
           </p>
-          <p className="label mt-6">Since 1969</p>
+          <p className="label !text-steel-400 mt-6">Since 1969</p>
         </div>
 
         {/* Column 2 — Quick Links */}
         <div>
-          <h3 className="heading-3 mb-6">Quick Links</h3>
+          <h3 className="heading-3 !text-white mb-6">Quick Links</h3>
           <ul className="space-y-3">
             {FOOTER_LINKS.map((link) => (
               <li key={link.label}>
                 <a
                   href={link.href}
-                  className="body-base hover:text-gold-500 transition-colors duration-300"
+                  className="body-base !text-steel-300 hover:!text-gold-500 transition-colors duration-300"
                 >
                   {link.label}
                 </a>
@@ -47,7 +47,7 @@ export default function Footer() {
 
         {/* Column 3 — Contact */}
         <div>
-          <h3 className="heading-3 mb-6">Contact</h3>
+          <h3 className="heading-3 !text-white mb-6">Contact</h3>
           <div className="space-y-4">
             {/* Location */}
             <div className="flex items-start gap-3">
@@ -65,7 +65,7 @@ export default function Footer() {
                 <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
                 <circle cx="12" cy="10" r="3" />
               </svg>
-              <p className="body-base">
+              <p className="body-base !text-steel-300">
                 Mohan Nagar, Ghaziabad,
                 <br />
                 Uttar Pradesh 201007, India
@@ -90,7 +90,7 @@ export default function Footer() {
               </svg>
               <a
                 href="mailto:info@mgwbl.com"
-                className="body-base hover:text-gold-500 transition-colors duration-300"
+                className="body-base !text-steel-300 hover:!text-gold-500 transition-colors duration-300"
               >
                 info@mgwbl.com
               </a>
@@ -113,7 +113,7 @@ export default function Footer() {
               </svg>
               <a
                 href="tel:+911234567890"
-                className="body-base hover:text-gold-500 transition-colors duration-300"
+                className="body-base !text-steel-300 hover:!text-gold-500 transition-colors duration-300"
               >
                 +91 123 456 7890
               </a>
@@ -127,7 +127,7 @@ export default function Footer() {
         className="mt-16 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 max-w-[1600px] mx-auto"
         style={{ borderTop: '1px solid var(--glass-border)' }}
       >
-        <p className="body-base text-steel-500">
+        <p className="body-base !text-steel-400">
           &copy; {new Date().getFullYear()} MGWBL. All rights reserved.
         </p>
 
@@ -141,7 +141,7 @@ export default function Footer() {
               style={{ border: '1px solid var(--glass-border)' }}
               aria-label={social}
             >
-              <span className="w-4 h-4 rounded-full bg-steel-500" />
+              <span className="w-4 h-4 rounded-full bg-steel-400" />
             </a>
           ))}
         </div>

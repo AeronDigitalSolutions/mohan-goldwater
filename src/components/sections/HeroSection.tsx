@@ -80,35 +80,61 @@ export default function HeroSection({ id, className = '' }: SectionProps) {
     >
       {/* Background Image with Overlay */}
       <div className="absolute inset-0 z-0 pointer-events-none bg-primary-900">
-        <div ref={bgRef} className="absolute inset-0 w-full h-full will-change-transform">
-          <Image
-            src="/assets/hero-bg.png"
-            alt="MGWBL Brewery Facility"
-            fill
-            priority
-            className="object-cover opacity-80"
-            sizes="100vw"
-          />
+        <div ref={bgRef} className="absolute inset-0 w-full h-full will-change-transform bg-primary-900">
+          <div className="hero-img-dark absolute inset-0 w-full h-full">
+            <Image
+              src="/assets/hero-bg.png"
+              alt="MGWBL Brewery Facility"
+              fill
+              priority
+              className="object-cover opacity-80"
+              sizes="100vw"
+            />
+          </div>
+          <div className="hero-img-light absolute inset-0 w-full h-full">
+            <Image
+              src="/assets/hero-bg-light.png"
+              alt="MGWBL Brewery Facility Light"
+              fill
+              priority
+              className="object-cover opacity-80"
+              sizes="100vw"
+            />
+          </div>
         </div>
         {/* Gradient Overlay for Text Readability */}
-        <div className="absolute inset-0 bg-gradient-to-t from-primary-900 via-primary-900/30 to-transparent" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,var(--primary-900)_100%)] opacity-40" />
+        <div 
+          className="absolute inset-0"
+          style={{ background: 'linear-gradient(to top, var(--hero-gradient) 0%, transparent 40%)' }}
+        />
+        <div 
+          className="absolute inset-0 opacity-40"
+          style={{ background: 'radial-gradient(circle at center, transparent 0%, var(--hero-overlay) 100%)' }}
+        />
       </div>
 
-      <div ref={contentRef} className="relative z-10 text-center flex flex-col items-center justify-center pt-20">
-        <span className="label text-gold-500 tracking-[0.3em]">
+      <div ref={contentRef} className="relative z-10 text-center flex flex-col items-center justify-center pt-20" style={{ marginTop: 'var(--hero-content-offset)', transition: 'margin-top 0.8s cubic-bezier(0.16, 1, 0.3, 1)' }}>
+        <span 
+          className="label tracking-[0.3em] px-6 py-2 rounded-full backdrop-blur-md border border-white/20 shadow-xl"
+          style={{ backgroundColor: 'var(--hero-pill-bg, rgba(255,255,255,0.1))', color: 'var(--hero-pill-text, var(--text-primary))', transition: 'all 0.5s ease' }}
+        >
           ESTABLISHED 1969
         </span>
 
-        <h1 className="heading-display mt-8 leading-tight">
+        <h1 className="heading-display text-hero-heading mt-8 leading-tight">
           Brewing
           <br />
-          <span className="text-gradient-gold">Excellence.</span>
+          <span className="text-gradient-hero-excellence">Excellence.</span>
         </h1>
 
-        <p className="body-large mt-8 max-w-xl mx-auto text-steel-200">
-          Engineering Trust Since 1969
-        </p>
+        <div 
+          className="px-6 py-2 rounded-full backdrop-blur-md border border-white/20 mt-8 shadow-xl"
+          style={{ backgroundColor: 'var(--hero-pill-bg, rgba(255,255,255,0.1))', transition: 'background-color 0.5s ease' }}
+        >
+          <p className="body-large max-w-xl mx-auto font-medium" style={{ color: 'var(--hero-pill-text, var(--text-primary))', margin: 0, transition: 'color 0.5s ease' }}>
+            Engineering Trust Since 1969
+          </p>
+        </div>
 
         <div
           className="golden-line mt-12 mx-auto"
@@ -118,9 +144,14 @@ export default function HeroSection({ id, className = '' }: SectionProps) {
 
       {/* Scroll Indicator */}
       <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center z-10">
-        <span className="text-xs uppercase tracking-widest text-steel-500 mb-2 animate-bounce">
-          Scroll to Explore
-        </span>
+        <div 
+          className="px-6 py-2 rounded-full backdrop-blur-md border border-white/20 mb-2 shadow-xl"
+          style={{ backgroundColor: 'var(--hero-pill-bg, rgba(255,255,255,0.1))', transition: 'background-color 0.5s ease' }}
+        >
+          <span className="text-xs uppercase tracking-widest animate-bounce block font-bold" style={{ color: 'var(--hero-pill-text, var(--text-primary))', transition: 'color 0.5s ease' }}>
+            Scroll to Explore
+          </span>
+        </div>
         <svg
           width="24"
           height="24"

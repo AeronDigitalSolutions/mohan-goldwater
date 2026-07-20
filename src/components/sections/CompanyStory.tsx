@@ -173,7 +173,7 @@ export default function CompanyStory({ id, className = '' }: SectionProps) {
           {/* Right — Image with Mask Reveal */}
           <div className="relative h-[600px] lg:h-full min-h-[600px] rounded-3xl overflow-hidden border border-white/10" ref={imageContainerRef}>
             {/* The reveal block that slides away */}
-            <div ref={imageRevealRef} className="absolute inset-0 bg-primary-900 z-20 origin-top"></div>
+            <div ref={imageRevealRef} className="absolute inset-0 bg-background z-20 origin-top transition-colors duration-500"></div>
             {/* The actual image */}
             <Image
               src="/assets/long-image.png"
@@ -184,7 +184,7 @@ export default function CompanyStory({ id, className = '' }: SectionProps) {
             />
             
             {/* Overlay gradient for aesthetics */}
-            <div className="absolute inset-0 bg-gradient-to-t from-primary-900 via-transparent to-primary-900/40 z-10 pointer-events-none"></div>
+            <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/40 z-10 pointer-events-none transition-opacity duration-500"></div>
           </div>
         </div>
       </div>

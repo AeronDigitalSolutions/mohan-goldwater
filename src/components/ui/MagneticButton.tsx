@@ -60,7 +60,7 @@ export default function MagneticButton({
   };
 
   const variantClasses = {
-    primary: 'bg-gold-500 text-primary-900 font-semibold hover:bg-gold-400 focus-visible:ring-gold-500',
+    primary: 'bg-gold-500 !text-[#050505] font-semibold hover:bg-gold-400 focus-visible:ring-gold-500',
     secondary: 'border border-gold-500 text-gold-500 bg-transparent hover:bg-gold-500/10 focus-visible:ring-gold-500',
     ghost: 'text-steel-300 hover:text-gold-500 bg-transparent focus-visible:ring-gold-500',
   };

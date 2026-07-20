@@ -93,6 +93,7 @@ export default function Infrastructure({ id, className = '' }: SectionProps) {
           <SectionHeading
             label="INFRASTRUCTURE"
             title="Manufacturing at Scale"
+            titleClassName="!text-white"
           />
           <p className="body-large text-steel-300 mt-8">
             Located in Unnao, Uttar Pradesh, our state-of-the-art facility integrates advanced brewing technology with uncompromising safety and hygiene standards to deliver unparalleled quality at scale.
