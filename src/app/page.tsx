@@ -38,33 +38,29 @@ export default function HomePage() {
         {/* Loading Experience */}
         {!isLoaded && <LoadingExperience onComplete={handleLoadComplete} />}
 
-        {/* Custom Cursor (desktop only) */}
-        <CustomCursor />
-
-        {/* Navigation */}
-        <Navigation />
-
-        {/* Scroll Progress */}
-        <ScrollProgress />
-
-        {/* Sound Toggle */}
-        <SoundToggle />
-
         {/* Premium 2D Sections */}
-        <main id="scroll-container" className="relative z-10 w-full overflow-hidden">
-          <HeroSection id="hero" />
-          <CompanyStory id="company" />
-          <Timeline id="timeline" />
-          <BrewingProcess id="process" />
-          <Infrastructure id="infrastructure" />
-          <QualityControl id="quality" />
-          <CarlsbergPartnership id="partnership" />
-          <Sustainability id="sustainability" />
-          {/* Leadership section removed for now, can be added back later */}
-          <Careers id="careers" />
-          <Contact id="contact" />
-          <Footer />
-        </main>
+        {isLoaded && (
+          <>
+            <CustomCursor />
+            <Navigation />
+            <ScrollProgress />
+            <SoundToggle />
+            <main id="scroll-container" className="relative z-10 w-full overflow-hidden animate-in fade-in duration-1000">
+              <HeroSection id="hero" />
+              <CompanyStory id="company" />
+              <Timeline id="timeline" />
+              <BrewingProcess id="process" />
+              <Infrastructure id="infrastructure" />
+              <QualityControl id="quality" />
+              <CarlsbergPartnership id="partnership" />
+              <Sustainability id="sustainability" />
+              {/* Leadership section removed for now, can be added back later */}
+              <Careers id="careers" />
+              <Contact id="contact" />
+              <Footer />
+            </main>
+          </>
+        )}
       </SmoothScrollProvider>
     </SoundProvider>
   );
