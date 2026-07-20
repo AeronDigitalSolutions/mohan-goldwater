@@ -5,11 +5,7 @@ import dynamic from 'next/dynamic';
 import SmoothScrollProvider from '@/providers/SmoothScrollProvider';
 import SoundProvider from '@/providers/SoundProvider';
 
-// Dynamic imports for code splitting
-const LoadingExperience = dynamic(
-  () => import('@/components/loading/LoadingExperience'),
-  { ssr: false }
-);
+import LoadingExperience from '@/components/loading/LoadingExperience';
 
 const HeroSection = dynamic(() => import('@/components/sections/HeroSection'), { ssr: false });
 const CompanyStory = dynamic(() => import('@/components/sections/CompanyStory'), { ssr: false });
