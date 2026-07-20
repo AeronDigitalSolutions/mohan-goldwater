@@ -54,10 +54,18 @@ export default function LoadingExperience({ onComplete }: LoadingExperienceProps
       ease: 'power2.out',
     }, 2.5);
 
-    // 3.5s: entire overlay fades out
+    // 3.0s: fade out the text elements first so they don't ghost over the hero image
+    tl.to([titleRef.current, lineRef.current, subtitleRef.current], {
+      opacity: 0,
+      y: -20,
+      duration: 0.5,
+      ease: 'power2.inOut',
+    }, 3.0);
+
+    // 3.5s: entire overlay background fades out to reveal the hero section
     tl.to(containerRef.current, {
       opacity: 0,
-      duration: 0.5,
+      duration: 0.8,
       ease: 'power2.inOut',
     }, 3.5);
 
